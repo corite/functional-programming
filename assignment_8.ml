@@ -11,20 +11,22 @@ let rec expr2string = function
   | Let (s, e1, e2) ->
       "let " ^ s ^ "=" ^ expr2string e1 ^ " in " ^ expr2string e2
 
+(* todo something is wrong, function signature is messed up *)
 let freevars e =
   let rec fv = function
-    | Var s, bv -> if List.exists (fun e -> e = s) bv then [] else [ s ]
+    | Var s, bv -> if List.exists (( = ) s) bv then [] else [ s ]
     | Lambda (s, e), bv -> fv (e, s :: bv)
     | App (e1, e2), bv -> fv (e1, bv) @ fv (e2, bv)
     | Let (s, e1, e2), bv -> fv (e1, bv) @ fv (e2, s :: bv)
   in
   (fv e, [])
 
+(* todo handle name collisions *)
 let rec subst = function
   | Var s, x, y when s = x -> y
-  | Lambda (s, e), x, y when s != x -> Lambda (s, subst (e, x, y))
+  | Lambda (s, e), x, y when s <> x -> Lambda (s, subst (e, x, y))
   | App (e1, e2), x, y -> App (subst (e1, x, y), subst (e2, x, y))
-  | Let (s, e1, e2), x, y when s != x ->
+  | Let (s, e1, e2), x, y when s <> x ->
       Let (s, subst (e1, x, y), subst (e2, x, y))
   | e, x, y -> e
 
