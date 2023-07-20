@@ -21,11 +21,23 @@ type expre =
   | MonOp of monOp * expre
   | Const of const
 
-type ('a,'b) trie = Node of 'b option * (('a,'b) trie * 'a) list
-let mytrie = Node (Some 1, [Node(Some 2,[]) , 'b'])
-let existsNode k l = List.exists (fun x -> match x with _, k-> true|a,b->false) l
-let rec insert : ('a, 'b) trie -> 'a list -> 'b -> ('a, 'b) trie = fun t k v -> match k,t with 
-hk::tk,Node(tv,tl) when existsNode hk tl -> Node(tv, List.map (fun x -> match x with n,hk -> insert n tk v,hk |_->x) tl) |
-hk::[],Node(tv,tl) -> Node(tv, (Node(Some v,[]),hk)::tl) |
-_ -> failwith "case not supported"
+type ('a, 'b) trie = Node of 'b option * (('a, 'b) trie * 'a) list
 
+let mytrie = Node (Some 1, [ (Node (Some 2, []), 'b') ])
+
+let existsNode k l =
+  List.exists (fun x -> match x with _, k -> true | a, b -> false) l
+
+let rec insert : ('a, 'b) trie -> 'a list -> 'b -> ('a, 'b) trie =
+ fun t k v ->
+  match (k, t) with
+  | hk :: tk, Node (tv, tl) when existsNode hk tl ->
+      Node
+        ( tv,
+          List.map
+            (fun x -> match x with n, hk -> (insert n tk v, hk) | _ -> x)
+            tl )
+  | [ hk ], Node (tv, tl) -> Node (tv, (Node (Some v, []), hk) :: tl)
+  | _ -> failwith "case not supported"
+
+(*todo implementation of other trie functions *)

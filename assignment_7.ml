@@ -1,3 +1,4 @@
+(* todo lambda calculus stuff *)
 type expr =
   | Var of string (* variable *)
   | Lambda of string * expr (* function abstraction *)
@@ -12,9 +13,12 @@ let rec expr2string = function
   | Let (n, e1, e2) -> n ^ expr2string e1 ^ expr2string e2
   | LetRec (n, e1, e2) -> n ^ expr2string e1 ^ expr2string e2
 
+(*todo do this right (renaming etc. )*)
 let rec subst e v s = match e with
 | Var v -> s
 | Lambda (v, e) -> Lambda (v, subst e v s)
 | App (e1, e2) -> App (subst e1 v s, subst e2 v s)
 | Let (n, e1, e2) -> Let (n, subst e1 v s, subst e2 v s)
 | LetRec (n, e1, e2) -> LetRec (n, subst e1 v s, subst e2 v s)
+
+(* todo freevars *)

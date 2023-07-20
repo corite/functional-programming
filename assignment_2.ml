@@ -32,3 +32,8 @@ let minus (p1, s1, c1) (p2, s2, c2) =
   let cs, so = ovmin c1 c2 12 in
   let ss, po = ovmin s1 (s2 - so) 20 in
   (p1 - p2 - po, ss, cs)
+
+  (* records *)
+type eudate = { minutes : int; hours : int }
+type usdate = { minutes : int; hours : int; mode : string }
+type bc = { pence : int; shilling : int; pound : int }
