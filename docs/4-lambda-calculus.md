@@ -2,7 +2,7 @@
 
 - any variable $x \in V$ is a $\lambda$-term
 - if $x \in V$ and $e$ is a $\lambda$-term then $\lambda x.e$ is a λ-term $\rightarrow$ "function abstraction"
-- if $e1$ and $e2$ are $\lambda$-terms then $(e1 e2)$ is a $\lambda$-term ("function application") where $e1$ is the function and $e2$ is the argument.
+- if $e1$ and $e2$ are $\lambda$-terms then $(e1\ e2)$ is a $\lambda$-term ("function application") where $e1$ is the function and $e2$ is the argument.
 
 ## Bound Variables
 
@@ -53,7 +53,7 @@ subst λy.e y a -> λy.e
 
 A λ-term $e_0$ is β-reducible to a λ-term e_n iff (sic!) there are λ-terms $e_1, \dots, e_{n-1}$
 
-where $e_i \rightarrow β e_{i+1}$ for all $0\leq i<n$. We write $e_0 \rightarrow V*β e_n$.
+where $e_i \rightarrow \beta e_{i+1}$ for all $0\leq i<n$. We write $e_0 \rightarrow \beta^* e_n$.
 
 
 ## $\alpha$-Conversion
@@ -76,15 +76,15 @@ We write $[\![e1]\!] = [\![e2]\!]$  .
 
 ## Church-Rosser Theorem
 
-Let e0, e1, e2 be λ-terms.
+Let $e_0, e_1, e_2$ be $\lambda$-terms.
 
-If e0 ->*β e1 and e0 ->*β e2
+If $e_0 \rightarrow \beta^* e_1$ and $e_0 \rightarrow \beta^* e_2$
 
-then there is a λ-term e3 with
+then there is a $\lambda$-term $e_3$ with
 
-e1 ->*β e3 and e2 ->*β e3.
+$e_1 \rightarrow \beta^* e_3$ and $e_2 \rightarrow \beta^* e_3$.
 
-In practical terms, the Church-Ro|sser Theorem says that any terminating reduction sequences lead to the very same normal form. So, it doesn't matter which beta-redex you choose for reduction, unless you take a route that does not terminate.
+In practical terms, the Church-Rosser Theorem says that any terminating reduction sequences lead to the very same normal form. So, it doesn't matter which beta-redex you choose for reduction, unless you take a route that does terminate.
 
 ## Reduction Order
 
