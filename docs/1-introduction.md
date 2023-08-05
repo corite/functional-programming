@@ -1,4 +1,4 @@
-# -Introduction
+# Introduction
 
 ## Turing Machines (1936)
 
